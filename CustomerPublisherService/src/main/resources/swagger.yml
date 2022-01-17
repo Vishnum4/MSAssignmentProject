@@ -1,0 +1,192 @@
+openapi: 3.0.0
+info:
+  description: "Customer Publisher Service."
+  version: "1.0.0"
+  title: "MicroServices AssignMent"
+  
+servers:
+  - url: http://localhost:8080/api/v1
+    description: "local server"
+security :
+  - oauthsample:
+      - read
+      - write
+paths:
+  /customer-register:
+    post:
+      tags:
+        - "Customer"
+      summary: Operation To Register Customers
+      operationId: "addustomer"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CustomerRequest"
+              
+      responses:
+        '200':
+          description: Customer Registered Sucessfully
+          content:
+           application/json:
+            schema:
+               $ref: "#/components/schemas/CustomerResponse"
+        '400':
+          description: Bad Request
+          content:
+           application/json:
+            schema:
+              $ref: "#/components/schemas/ErrorResponse"
+        '401':
+          description: Authorization Invalid
+          content:
+           application/json:
+             schema:
+               $ref: "#/components/schemas/ErrorResponse"
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+             schema:
+              $ref: "#/components/schemas/ErrorResponse"
+      
+      parameters: 
+         - name: "Authorization-ID"
+           in: "header"
+           required: true
+           schema:
+             type: string
+         - name: "Transaction-ID"
+           in: "header"
+           required: true
+           schema:
+             type: string   
+         - name: "Activity-ID"
+           in: "header"
+           required: true
+           schema:
+             type: string   
+   
+             
+components:
+  securitySchemes:
+    oauthsample:
+      type: oauth2
+      description: This API uses OAuth 2 with the client-credential grant flow
+      flows:
+        clientCredentials:
+          tokenUrl: "http://localhost:8080/oauth/token?grant_type=client_credentials"
+          scopes:
+            read: Grants read access
+            write: Grants write access
+  schemas:
+    CustomerRequest:
+      type: object
+      required:
+        - customerId
+        - firstName
+        - lastName
+        - birthDate
+        - country
+        - countryCode
+        - mobileNumber
+        - email
+        - customerStatus
+        - address
+      properties:
+        customerId:
+          type: string
+          description: "customerID format Alphanumeric :C000000001"
+          maxLength: 10
+        firstName:
+          type: string
+          description: "customer firstName"
+          minLength: 10
+          maxLength: 50
+        lastName:
+          type: string
+          description: "customer LastName"
+          minLength: 10
+          maxLength: 50
+        birthDate:
+          type: string
+          description: "Date of Birth of customer of format DD-MM-YYYY"
+          pattern: "^(3[01]|[12][0-9]|0[1-9])-(1[0-2]|0[1-9])-[0-9]{4}$"
+        countryCode:
+          type: string
+          description: "Country Code of customer"
+          maxLength: 2
+        country:
+          type: string
+          description: "customer Country name"  
+        email:
+          type: string
+          description: "Must be Email ID of customer"
+          format: email
+          maxLength: 50
+        mobileNumber:
+          type: integer
+          description: "customer mobile Number"
+          maxLength: 10
+        customerStatus:
+          type: string
+          description: "Customer Status"
+          enum:
+            - Open
+            - Closed
+            - Suspended
+            - Restored
+        address:
+          $ref: "#/components/schemas/CustomerAddress"
+          
+    CustomerAddress:
+      type: object
+      required:
+        - addressLine1
+        - postalCode
+      properties:
+        addressLine1:
+          description: "Customer Address Line 1"
+          type: string
+          maxLength: 50
+        addressLine2:
+          description: "Customer Address Line 2"
+          type: string
+        street:
+          description: "Street"
+          type: string
+        postalCode:
+          description: "Valid postal code"
+          type: string
+          maxLength: 5
+          
+    ErrorResponse:
+      type: object
+      required:
+       - status
+       - message
+       - errorType
+      properties:
+        status:
+         description: "Failed"
+         type: string
+        message:
+         description: "failed message"
+         type: string
+        errorType:
+         description: "Error occured cause"
+         type: string
+    
+    CustomerResponse:
+      type: object
+      required: 
+       - status
+       - message
+      properties:
+        status:
+         description: "Sucess"
+         type: string
+        message:
+         description: "message pushed to kafka"
+         type: string
+         
