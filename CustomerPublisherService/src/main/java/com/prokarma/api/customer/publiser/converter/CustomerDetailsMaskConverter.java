@@ -1,7 +1,5 @@
-package com.prokarma.api.customer.publiser.converterImpl;
+package com.prokarma.api.customer.publiser.converter;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.prokarma.api.customer.publiser.converter.Converter;
@@ -10,7 +8,7 @@ import com.prokarma.api.customer.publiser.util.PublisherConstants;
 
 @Component
 public class CustomerDetailsMaskConverter implements Converter {
-	
+
 	public CustomerRequest convert(CustomerRequest customerRequest) {
 		CustomerRequest customer = new CustomerRequest();
 		customer.setCustomerId(customerRequest.getCustomerId().replaceAll(PublisherConstants.CUSTOMER_EXPRESSION, "*"));

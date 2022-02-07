@@ -1,4 +1,4 @@
-package com.prokarma.api.customer.publiser.kafkaImpl;
+package com.prokarma.api.customer.publiser.kafka;
 
 import java.util.HashMap;
 import java.util.Map;

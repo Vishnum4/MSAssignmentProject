@@ -31,8 +31,7 @@ public class CustomerPublisherControllerAdvice {
 	}
 
 	@ExceptionHandler(NoHandlerFoundException.class)
-	public final ResponseEntity<ErrorResponse> exception(NoHandlerFoundException ex,
-			HttpServletRequest request) {
+	public final ResponseEntity<ErrorResponse> exception(NoHandlerFoundException ex, HttpServletRequest request) {
 		ErrorResponse response = new ErrorResponse();
 		response.setStatus(PublisherConstants.Error);
 		response.setMessage("No url " + ex.getMessage());
@@ -42,8 +41,7 @@ public class CustomerPublisherControllerAdvice {
 	}
 
 	@ExceptionHandler(AuthenticationException.class)
-	public final ResponseEntity<ErrorResponse> exception(AuthenticationException ex,
-			HttpServletRequest request) {
+	public final ResponseEntity<ErrorResponse> exception(AuthenticationException ex, HttpServletRequest request) {
 		ErrorResponse response = new ErrorResponse();
 		response.setStatus(PublisherConstants.Error);
 		response.setMessage("Authentication Issue " + ex.getMessage());
@@ -53,8 +51,7 @@ public class CustomerPublisherControllerAdvice {
 	}
 
 	@ExceptionHandler(GeneralException.class)
-	public final ResponseEntity<ErrorResponse> exception(GeneralException ex,
-			HttpServletRequest request) {
+	public final ResponseEntity<ErrorResponse> exception(GeneralException ex, HttpServletRequest request) {
 		ErrorResponse response = new ErrorResponse();
 		response.setStatus(PublisherConstants.Error);
 		response.setMessage("Request Headers are missing " + ex.getMessage());
@@ -62,10 +59,9 @@ public class CustomerPublisherControllerAdvice {
 		return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 
 	}
-	
+
 	@ExceptionHandler(ValidationException.class)
-	public final ResponseEntity<ErrorResponse> exception(ValidationException ex,
-			HttpServletRequest request) {
+	public final ResponseEntity<ErrorResponse> exception(ValidationException ex, HttpServletRequest request) {
 		ErrorResponse response = new ErrorResponse();
 		response.setStatus(PublisherConstants.Error);
 		response.setMessage("Input validation error " + ex.getMessage());
@@ -73,24 +69,27 @@ public class CustomerPublisherControllerAdvice {
 		return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
 
 	}
-	
-	  @ExceptionHandler(HttpMediaTypeNotSupportedException.class) public final
-	  ResponseEntity<ErrorResponse> exception(HttpMediaTypeNotSupportedException
-	  ex, HttpServletRequest request) { ErrorResponse response = new
-	  ErrorResponse(); response.setStatus(PublisherConstants.Error);
-	  response.setMessage("MediaType Not Supported" + ex.getMessage());
-	  response.errorType(HttpMediaTypeNotSupportedException.class.getSimpleName());
-	  return new ResponseEntity<>(response, HttpStatus.UNSUPPORTED_MEDIA_TYPE);
-	  
-	  }
-	  @ExceptionHandler(HttpMessageNotReadableException.class) public final
-	  ResponseEntity<ErrorResponse> exception(HttpMessageNotReadableException
-	  ex, HttpServletRequest request) { ErrorResponse response = new
-	  ErrorResponse(); response.setStatus(PublisherConstants.Error);
-	  response.setMessage("Input details are not reable" + ex.getMessage());
-	  response.errorType(HttpMessageNotReadableException.class.getSimpleName());
-	  return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-	  
-	  }
-	 
+
+	@ExceptionHandler(HttpMediaTypeNotSupportedException.class)
+	public final ResponseEntity<ErrorResponse> exception(HttpMediaTypeNotSupportedException ex,
+			HttpServletRequest request) {
+		ErrorResponse response = new ErrorResponse();
+		response.setStatus(PublisherConstants.Error);
+		response.setMessage("MediaType Not Supported" + ex.getMessage());
+		response.errorType(HttpMediaTypeNotSupportedException.class.getSimpleName());
+		return new ResponseEntity<>(response, HttpStatus.UNSUPPORTED_MEDIA_TYPE);
+
+	}
+
+	@ExceptionHandler(HttpMessageNotReadableException.class)
+	public final ResponseEntity<ErrorResponse> exception(HttpMessageNotReadableException ex,
+			HttpServletRequest request) {
+		ErrorResponse response = new ErrorResponse();
+		response.setStatus(PublisherConstants.Error);
+		response.setMessage("Input details are not reable" + ex.getMessage());
+		response.errorType(HttpMessageNotReadableException.class.getSimpleName());
+		return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+
+	}
+
 }

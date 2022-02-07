@@ -7,7 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import com.prokarma.api.customer.publiser.converterImpl.CustomerDetailsMaskConverter;
+import com.prokarma.api.customer.publiser.converter.CustomerDetailsMaskConverter;
 import com.prokarma.api.customer.publiser.domain.CustomerAddress;
 import com.prokarma.api.customer.publiser.domain.CustomerRequest;
 import com.prokarma.api.customer.publiser.domain.CustomerRequest.CustomerStatusEnum;
@@ -24,8 +24,7 @@ public class CustomerDetailsMaskConverterTest {
 	}
 
 	@Test
-	public void testPassingCustomerRequestShouldApplyMaskingLogicToRequestObjec()
-	{
+	public void testPassingCustomerRequestShouldApplyMaskingLogicToRequestObjec() {
 		CustomerRequest request = customerDetailsMaskConverter.convert(customerRequest());
 		assertNotNull(request);
 		assertEquals("E20000****", request.getCustomerId());
@@ -43,6 +42,7 @@ public class CustomerDetailsMaskConverterTest {
 		request.setCustomerStatus(CustomerStatusEnum.OPEN);
 		request.setCountry("india");
 		request.setCountryCode("IN");
+		request.setMobileNumber("9676114532");
 		request.setBirthDate("07-08-1995");
 		request.setAddress(createCustomerAddress());
 		return request;

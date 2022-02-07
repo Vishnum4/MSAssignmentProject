@@ -14,7 +14,7 @@ import javax.validation.constraints.*;
  * CustomerRequest
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-01-13T14:05:19.351Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-02-07T08:46:57.620Z[GMT]")
 
 public class CustomerRequest {
 	@JsonProperty("customerId")
@@ -39,7 +39,7 @@ public class CustomerRequest {
 	private String email = null;
 
 	@JsonProperty("mobileNumber")
-	private Integer mobileNumber = null;
+	private String mobileNumber = null;
 
 	/**
 	 * Customer Status
@@ -234,7 +234,7 @@ public class CustomerRequest {
 		this.email = email;
 	}
 
-	public CustomerRequest mobileNumber(Integer mobileNumber) {
+	public CustomerRequest mobileNumber(String mobileNumber) {
 		this.mobileNumber = mobileNumber;
 		return this;
 	}
@@ -247,11 +247,12 @@ public class CustomerRequest {
 	@Schema(required = true, description = "customer mobile Number")
 	@NotNull
 
-	public Integer getMobileNumber() {
+	@Size(max = 10)
+	public String getMobileNumber() {
 		return mobileNumber;
 	}
 
-	public void setMobileNumber(Integer mobileNumber) {
+	public void setMobileNumber(String mobileNumber) {
 		this.mobileNumber = mobileNumber;
 	}
 

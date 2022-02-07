@@ -6,6 +6,6 @@ import com.prokarma.api.customer.publiser.domain.CustomerResponse;
 
 public interface KafkaPublisher {
 
-	CustomerResponse sendMessageTokafka(CustomerRequest request, String topicName);
+	CustomerResponse sendMessageTokafka(CustomerRequest request);
 
 }

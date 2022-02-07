@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 @Component
 public class PublisherUtil {
 
-	 private static Logger log = LoggerFactory.getLogger(PublisherUtil.class);
+	private static Logger log = LoggerFactory.getLogger(PublisherUtil.class);
 
 	public static String convertingObjectToJson(Object Input) {
 		ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
@@ -19,7 +19,7 @@ public class PublisherUtil {
 		try {
 			json = ow.writeValueAsString(Input);
 		} catch (JsonProcessingException e) {
-			log.error("Error occured during conversion Object To Json :",e);
+			log.error("Error occured during conversion Object To Json :", e);
 			e.printStackTrace();
 		}
 		return json;

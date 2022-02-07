@@ -28,7 +28,7 @@ import com.prokarma.api.customer.publiser.util.PublisherUtil;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class CustomerPublisherControllerTests {
+public class CustomerPublisherControllerIntegrationTest {
 
 	@Autowired
 	private MockMvc mockMvc;
@@ -48,39 +48,6 @@ public class CustomerPublisherControllerTests {
 				.header("AuthorizationId", "bearer " + accessToken).header("Transaction-Id", "Trans1")
 				.header("Activity-Id", "activity1").contentType(MediaType.APPLICATION_JSON).content(jsonBody))
 				.andExpect(MockMvcResultMatchers.status().isOk());
-
-	}
-
-	@Test
-	public void customerRequestBadRequest() throws Exception {
-		CustomerRequest request = customerRequest();
-		String jsonBody = PublisherUtil.convertingObjectToJson(request);
-		mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/customer-register").contentType(MediaType.APPLICATION_JSON)
-				.content(jsonBody)).andExpect(MockMvcResultMatchers.status().isBadRequest());
-
-	}
-
-	@Test
-	public void customerRequestInternalServerError() throws Exception {
-		CustomerRequest request = customerRequest();
-		String accessToken = obtainAccessToken("Dummy", "unath");
-		String jsonBody = PublisherUtil.convertingObjectToJson("null");
-		mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/customer-register")
-				.header("AuthorizationId", "bearer " + accessToken).header("Transaction-Id", "Trans1")
-				.header("Activity-Id", "activity1").contentType(MediaType.APPLICATION_JSON).content(jsonBody))
-				.andExpect(MockMvcResultMatchers.status().isBadRequest());
-
-	}
-
-	@Test
-	public void customerRequestUnAnthorized() throws Exception {
-		CustomerRequest request = customerRequest();
-		String accessToken = obtainAccessToken("Dummy", "unath");
-		String jsonBody = PublisherUtil.convertingObjectToJson(request);
-		mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/customer-register")
-				.header("AuthorizationId", "bearer " + accessToken).header("Transaction-Id", "Trans1")
-				.header("Activity-Id", "activity1").contentType(MediaType.APPLICATION_JSON).content(jsonBody))
-				.andExpect(MockMvcResultMatchers.status().isUnauthorized());
 
 	}
 
@@ -124,4 +91,5 @@ public class CustomerPublisherControllerTests {
 		customerAdress.setPostalCode("50616");
 		return customerAdress;
 	}
+
 }

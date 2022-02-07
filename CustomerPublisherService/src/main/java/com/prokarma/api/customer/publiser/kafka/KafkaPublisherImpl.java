@@ -1,7 +1,7 @@
-package com.prokarma.api.customer.publiser.kafkaImpl;
+package com.prokarma.api.customer.publiser.kafka;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
@@ -17,9 +17,12 @@ public class KafkaPublisherImpl implements KafkaPublisher {
 	@Autowired
 	private KafkaTemplate kafkaTemplate;
 
+	@Value("${spring.kafka.publishing_topic}")
+	private String Publishingtopic;
+
 	@SuppressWarnings("unchecked")
-	public CustomerResponse sendMessageTokafka(CustomerRequest request, String topicName) {
-		kafkaTemplate.send(topicName, request);
+	public CustomerResponse sendMessageTokafka(CustomerRequest request) {
+		kafkaTemplate.send(Publishingtopic, request);
 		return customerResponse();
 	}
 
