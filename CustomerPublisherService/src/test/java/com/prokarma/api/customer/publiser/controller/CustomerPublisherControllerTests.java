@@ -52,18 +52,9 @@ public class CustomerPublisherControllerTests {
 	}
 
 	@Test
-	public void customerRequestBadRequest() throws Exception {
-		CustomerRequest request = customerRequest();
-		String jsonBody = PublisherUtil.convertingObjectToJson(request);
-		mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/customer-register").contentType(MediaType.APPLICATION_JSON)
-				.content(jsonBody)).andExpect(MockMvcResultMatchers.status().isBadRequest());
-
-	}
-
-	@Test
 	public void customerRequestInternalServerError() throws Exception {
 		CustomerRequest request = customerRequest();
-		String accessToken = obtainAccessToken("Dummy", "unath");
+		String accessToken = obtainAccessToken("Vishnu", "secret");
 		String jsonBody = PublisherUtil.convertingObjectToJson("null");
 		mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/customer-register")
 				.header("AuthorizationId", "bearer " + accessToken).header("Transaction-Id", "Trans1")
@@ -81,6 +72,27 @@ public class CustomerPublisherControllerTests {
 				.header("AuthorizationId", "bearer " + accessToken).header("Transaction-Id", "Trans1")
 				.header("Activity-Id", "activity1").contentType(MediaType.APPLICATION_JSON).content(jsonBody))
 				.andExpect(MockMvcResultMatchers.status().isUnauthorized());
+
+	}
+
+	@Test
+	public void customerRequestUnsupportedMediaType() throws Exception {
+		CustomerRequest request = customerRequest();
+		String accessToken = obtainAccessToken("Vishnu", "secret");
+		String jsonBody = PublisherUtil.convertingObjectToJson(request);
+		mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/customer-register")
+				.header("AuthorizationId", "bearer " + accessToken).header("Transaction-Id", "Trans1")
+				.header("Activity-Id", "activity1").contentType(MediaType.APPLICATION_XML).content(jsonBody))
+				.andExpect(MockMvcResultMatchers.status().isUnsupportedMediaType());
+
+	}
+
+	@Test
+	public void customerRequestBadRequest() throws Exception {
+		CustomerRequest request = customerRequest();
+		String jsonBody = PublisherUtil.convertingObjectToJson(request);
+		mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/customer-register").contentType(MediaType.APPLICATION_JSON)
+				.content(jsonBody)).andExpect(MockMvcResultMatchers.status().isBadRequest());
 
 	}
 
