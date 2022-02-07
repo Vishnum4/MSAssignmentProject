@@ -1,4 +1,4 @@
-package com.prokarma.api.customer.consumer.Audit;
+package com.prokarma.api.customer.consumer.audit;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -31,6 +31,7 @@ public class Audit {
 	public Audit() {
 		super();
 		// TODO Auto-generated constructor stub
+
 	}
 
 	public int getId() {
